@@ -1,0 +1,104 @@
+[gd_scene load_steps=18 format=3 uid="uid://rugxae2cto01"]
+
+[ext_resource type="Script" path="res://node_3d.gd" id="1_kn454"]
+[ext_resource type="Script" path="res://assignment-2-beatsaber-clone-GaddamSaketha/LineRenderer.gd" id="1_wflto"]
+[ext_resource type="PackedScene" uid="uid://bt8i6imwupx5s" path="res://cube_create.tscn" id="2_q406o"]
+[ext_resource type="PackedScene" uid="uid://cnwp7ndjr4s8y" path="res://assignment-2-beatsaber-clone-GaddamSaketha/Quest2Controllers/OculusQuest2TouchController_Left.gltf" id="2_tsrep"]
+[ext_resource type="Script" path="res://leftray.gd" id="3_6d6l0"]
+[ext_resource type="PackedScene" uid="uid://bc8lh0rihgxvi" path="res://assignment-2-beatsaber-clone-GaddamSaketha/Quest2Controllers/OculusQuest2TouchController_Right.gltf" id="3_qhxq2"]
+[ext_resource type="Script" path="res://rightray.gd" id="5_dvbey"]
+[ext_resource type="AudioStream" uid="uid://cqdhm2aa3msv8" path="res://fruit-impact-2-105282.mp3" id="8_grtjs"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bcwtd"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_8f2t6"]
+sky_material = SubResource("ProceduralSkyMaterial_bcwtd")
+
+[sub_resource type="Environment" id="Environment_nd71x"]
+background_mode = 2
+sky = SubResource("Sky_8f2t6")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cjvqw"]
+albedo_color = Color(1, 0, 0, 0)
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_057kq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yvhmp"]
+albedo_color = Color(0, 0.207843, 0.921569, 1)
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_8eef5"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ge26t"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_moxlf"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="Node3D" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.8842)
+script = ExtResource("1_kn454")
+cube_scene = ExtResource("2_q406o")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_nd71x")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="XROrigin3D" type="XROrigin3D" parent="."]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+
+[node name="LeftController" type="XRController3D" parent="XROrigin3D"]
+tracker = &"left_hand"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/LeftController"]
+material_override = SubResource("StandardMaterial3D_cjvqw")
+mesh = SubResource("ImmediateMesh_057kq")
+script = ExtResource("1_wflto")
+
+[node name="RayCast3D" type="RayCast3D" parent="XROrigin3D/LeftController/MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00327575, 0, 0)
+target_position = Vector3(0, 0, -2)
+collide_with_areas = true
+script = ExtResource("3_6d6l0")
+
+[node name="OculusQuest2TouchController_Left" parent="XROrigin3D/LeftController" instance=ExtResource("2_tsrep")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="RightController" type="XRController3D" parent="XROrigin3D"]
+tracker = &"right_hand"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/RightController"]
+material_override = SubResource("StandardMaterial3D_yvhmp")
+mesh = SubResource("ImmediateMesh_8eef5")
+script = ExtResource("1_wflto")
+
+[node name="RayCast3D" type="RayCast3D" parent="XROrigin3D/RightController/MeshInstance3D"]
+target_position = Vector3(0, 0, -5)
+collide_with_areas = true
+script = ExtResource("5_dvbey")
+
+[node name="OculusQuest2TouchController_Right" parent="XROrigin3D/RightController" instance=ExtResource("3_qhxq2")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.723221, -2)
+visible = false
+mesh = SubResource("BoxMesh_ge26t")
+
+[node name="Area3D" type="Area3D" parent="XROrigin3D/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XROrigin3D/MeshInstance3D/Area3D"]
+shape = SubResource("BoxShape3D_moxlf")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("8_grtjs")
+
+[connection signal="button_pressed" from="XROrigin3D/LeftController" to="." method="_on_left_controller_button_pressed"]
+[connection signal="button_pressed" from="XROrigin3D/RightController" to="." method="_on_right_controller_button_pressed"]

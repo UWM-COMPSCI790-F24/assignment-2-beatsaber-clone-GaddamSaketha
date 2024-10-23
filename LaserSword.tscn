@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://drbgl2uhf5nnv"]
+
+[ext_resource type="Script" path="res://assignment-2-beatsaber-clone-GaddamSaketha/LineRenderer.gd" id="1_av7ft"]
+
+[node name="MeshInstance3D" type="MeshInstance3D"]
+script = ExtResource("1_av7ft")
