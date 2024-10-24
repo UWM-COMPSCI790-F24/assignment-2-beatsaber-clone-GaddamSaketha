@@ -1,6 +1,3 @@
-// This script needs to be attached to a MeshInstance3D node
-// The MeshInstance3D node needs to have a new ImmediateMesh added to it
-
 extends MeshInstance3D
 
 @export var points = [Vector3(0,0,0),Vector3(0,5,0)]
@@ -20,7 +17,8 @@ func _ready():
 	pass
 
 func _process(delta):
-	
+	points[0] = get_parent_node_3d().global_position + (-get_parent_node_3d().global_basis.z * 0.1)
+	points[1] = (-get_parent_node_3d().global_basis.z * 2) + points[0]
 	
 	if points.size() < 2:
 		return

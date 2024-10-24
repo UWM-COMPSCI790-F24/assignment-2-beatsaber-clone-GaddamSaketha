@@ -1,8 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://rugxae2cto01"]
+[gd_scene load_steps=17 format=3 uid="uid://rugxae2cto01"]
 
 [ext_resource type="Script" path="res://node_3d.gd" id="1_kn454"]
 [ext_resource type="PackedScene" uid="uid://bt8i6imwupx5s" path="res://cube_create.tscn" id="2_q406o"]
 [ext_resource type="Script" path="res://leftray.gd" id="3_6d6l0"]
+[ext_resource type="Script" path="res://LineRenderer.gd" id="3_dkmsk"]
 [ext_resource type="PackedScene" uid="uid://cnwp7ndjr4s8y" path="res://Quest2Controllers/OculusQuest2TouchController_Left.gltf" id="4_lmprm"]
 [ext_resource type="Script" path="res://rightray.gd" id="5_dvbey"]
 [ext_resource type="AudioStream" uid="uid://daw7vmhjkd8hm" path="res://fruit-impact-2-105282.mp3" id="8_grtjs"]
@@ -58,6 +59,7 @@ tracker = &"left_hand"
 [node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/LeftController"]
 material_override = SubResource("StandardMaterial3D_cjvqw")
 mesh = SubResource("ImmediateMesh_057kq")
+script = ExtResource("3_dkmsk")
 
 [node name="RayCast3D" type="RayCast3D" parent="XROrigin3D/LeftController/MeshInstance3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00327575, 0, 0)
@@ -66,6 +68,7 @@ collide_with_areas = true
 script = ExtResource("3_6d6l0")
 
 [node name="OculusQuest2TouchController_Left" parent="XROrigin3D/LeftController" instance=ExtResource("4_lmprm")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
 [node name="RightController" type="XRController3D" parent="XROrigin3D"]
 tracker = &"right_hand"
@@ -73,6 +76,7 @@ tracker = &"right_hand"
 [node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D/RightController"]
 material_override = SubResource("StandardMaterial3D_yvhmp")
 mesh = SubResource("ImmediateMesh_8eef5")
+script = ExtResource("3_dkmsk")
 
 [node name="RayCast3D" type="RayCast3D" parent="XROrigin3D/RightController/MeshInstance3D"]
 target_position = Vector3(0, 0, -5)
@@ -80,7 +84,7 @@ collide_with_areas = true
 script = ExtResource("5_dvbey")
 
 [node name="OculusQuest2TouchController_Left" parent="XROrigin3D/RightController" instance=ExtResource("4_lmprm")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.723221, -2)
